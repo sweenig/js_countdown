@@ -1,0 +1,44 @@
+<script>
+  function countdown(yr,mon,d,h,m,pastmessage,target){
+    //yr,mon,d,h,m are the Year, Month, Day, Hour, and Minute of the date the future event occurs
+    //pastmessage is the message to display when the event has already happened
+    //target is the target element to write the output to
+    var today=new Date();
+    var futuredate=new Date(yr,mon-1,d,h,m); //don't care why but the month has to be decremented
+    dd=futuredate-today; //this should be the difference in the two dates in milliseconds
+    dday=Math.floor(dd/(60*60*1000*24)*1); //find the number of days in dd
+    dhour=Math.floor((dd%(60*60*1000*24))/(60*60*1000)*1); //find the number of hours in dd
+    dmin=Math.floor(((dd%(60*60*1000*24))%(60*60*1000))/(60*1000)*1); //find the number of minutes in dd
+    var wholedmin=dmin;if (dmin < 10){wholedmin="0"+dmin;} //convert to 2 digits if necessary
+    dsec=Math.floor((((dd%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1); //find the number of seconds in dd
+    var wholedsec=dsec;if (dsec < 10){wholedsec="0"+dsec;} //convert to 2 digits if necessary
+    if(futuredate<=today){document.getElementById(target).innerHTML=pastmessage;} //write this if the date is past
+    else {document.getElementById(target).innerHTML= dday+ " days, "+dhour+":"+wholedmin+":"+wholedsec;} //write this is futuredate is in the future
+  }
+</script>
+<style>
+  .countdown_container {
+    background-size:100% 100%;
+    position:relative;
+    display:inline-block;
+  }
+  .countdown_container > h1 {
+    position:absolute;
+    text-align:center;
+    bottom:0;
+    color:white;
+    background-color: rgba(0,0,0,0.5);
+    margin:0 auto;
+    width:100%;
+  }
+</style>
+<div class="countdown_container" style="background-image:url('starwars.jpg');height:718px;width:485px;">
+  <h1 id="starwars">
+</div>
+<div class="countdown_container" style="background-image:url('doctorwho.jpg');height:718px;width:457px;">
+  <h1 id="drwho">
+</div>
+<script>
+  var starwars = setInterval("countdown(2018,12,18,00,00,'It is out! Why are you not in the theater?','starwars')",1000); //this sets the starwars H1 element refreshing
+  var drwho = setInterval("countdown(2018,11,23,13,00,'Mind: blown.','drwho')",1000); //this sets the drwho H1 element refreshing
+</script>
